@@ -56,13 +56,13 @@ int main(void) {
     while(i < 5) {
         printf("reading 'ABC' from SP4 \n");
         char readbuf[5];
-        n = read(sp0, &buffer, 5);
+        n = read(sp0, &readbuf, 5);
         if (n < 0) {
           printf("error reading from SP4");
         } else {
-          printf("%c", buffer[0]);
-          printf("%c", buffer[1]);
-          printf("%c\n", buffer[2]);
+          printf("%c", readbuf[0]);
+          printf("%c", readbuf[1]);
+          printf("%c\n", readbuf[2]);
         }
         ++i; 
     }

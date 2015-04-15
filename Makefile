@@ -1,26 +1,16 @@
-package = rs485-test
-version = 1.0.0
-tarname = $(package)
-distdir = $(tarname)-$(version)
+sources = read-demo.c write-demo.c
+CFLAGS=-Wall
+APP_VERSION = "1.0.0"
 
-all clean rs485-test:
-	$(MAKE) $@ APP_VERSION=$(version)
+all: read-demo write-demo
 
-dist: $(distdir).tar.gz
+read-demo:
+	        $(CC) -DAPP_VERSION='"$(APP_VERSION)"' $(CFLAGS) $(INC) $(LDFLAGS) -o $@ read-demo.c
 
-$(distdir).tar.gz: $(distdir)
-	tar chof - $(distdir) | gzip -9 -c > $@
-	rm -rf $(distdir)
+write-demo:
+	        $(CC) -DAPP_VERSION='"$(APP_VERSION)"' $(CFLAGS) $(INC) $(LDFLAGS) -o $@ write-demo.c
 
-$(distdir): FORCE
-	mkdir -p $(distdir)/src
-	cp Makefile $(distdir)
-	cp Makefile $(distdir)/src
-	cp read-demo.c $(distdir)/src
-	cp write-demo.c $(distdir)/src
+clean:
+	        $(RM) read-demo write-demo
 
-FORCE:
-	-rm $(distdir).tar.gz > /dev/null 2>&1
-	-rm -rf $(distdir) > /dev/null 2>&1
-        
-.PHONY: FORCE all clean dist
+.PHONY: all clean
